@@ -12,7 +12,6 @@ EXPOSE 4000
 
 # Run the application:
 COPY . .
-CMD ["/usr/bin/supervisord", "-c", "/app/supervisord.conf"]
-CMD celery -A app worker --loglevel=info --beat
+CMD ["/usr/bin/supervisord", "-c", "/app/supervisord.conf"] 
 
 
