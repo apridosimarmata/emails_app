@@ -78,9 +78,7 @@ INSERT INTO event_registration (people_id, event_id) VALUES (3, 1);
 
 
 ## Setting up app
-```docker build --tag jublia .``` build image
-
-```docker run --name email_app -d -p 4000:4000 --network email_app jublia``` starting app
+```make run```
 
 
 
