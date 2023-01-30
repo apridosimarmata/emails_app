@@ -23,7 +23,7 @@ def make_celery(app):
     celery.conf.beat_schedule = {
         'send_email': {
             'task': 'app.send_email',
-            'schedule': timedelta(seconds=1),
+            'schedule': timedelta(minutes=1),
         }
     }
 
@@ -37,15 +37,16 @@ def make_celery(app):
 
 celery_app = make_celery(flask_app)
 
-from controller.emails import get_current_minute_email
+from controller.emails import get_current_minute_email, get_recipients_by_event_id
 from utils.email import send_email as send
 @celery_app.task
 def send_email():
     emails = get_current_minute_email()
     for email in emails:
-        send_email()
-    # Send the email
-    # ...
+        event_id = email.event_id
+        recipients = get_recipients_by_event_id(event_id)
+        for recipient in recipients:
+            send(recipient.email_address, email.email_subject, email.email_content)
 
 
 

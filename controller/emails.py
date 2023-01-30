@@ -1,4 +1,4 @@
-from data.request import Emails
+from data.emails import Emails, EventRegistration, People
 from utils.response import make_response
 from utils.date import string_to_timestamp, get_now
 from data.database import db
@@ -11,7 +11,7 @@ def save_email(data):
         email_content = data.get('email_content'),
         timestamp = string_to_timestamp(data.get('timestamp'))
     )
-    print(db.session)
+
     db.session.add(save_email_data)
     db.session.commit()
     db.session.close()
@@ -23,6 +23,13 @@ def save_email(data):
     )
 
 def get_current_minute_email():
-    return db.session.query(Emails).filter(Emails.timestamp.minute == get_now().minute).all()
+    return db.session.query(Emails).filter(Emails.timestamp == get_now()).all()
 
+def get_recipients_by_event_id(event_id):
+    recipients = []
+    for registration in db.session.query(EventRegistration).filter(EventRegistration.event_id == event_id).all():
+        recipients.append(
+            db.session.query(People).filter(People.id == registration.people_id).first()
+        )
+    return recipients
 
