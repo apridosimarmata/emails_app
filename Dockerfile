@@ -2,7 +2,7 @@
 
 FROM python:3.9-slim-bullseye
 
-RUN apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && apt-get install -y libpq-dev supervisor
 
 # Install dependencies:
 COPY . /app/
@@ -12,5 +12,7 @@ EXPOSE 4000
 
 # Run the application:
 COPY . .
-CMD ["nohup", "python3", "main.py"]
-CMD ["celery", "-A", "app", "worker", "--loglevel=info", "--beat"]
+CMD ["/usr/bin/supervisord", "-c", "/app/supervisord.conf"]
+CMD celery -A app worker --loglevel=info --beat
+
+
