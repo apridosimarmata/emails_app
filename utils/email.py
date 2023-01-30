@@ -10,7 +10,7 @@ def send_email(to, subject, message):
         server.login(gmail_user, gmail_password)
         message = f"Subject: {subject}\n\n{message}"
         server.sendmail(gmail_user, to, message)
-        print("Email sent successfully")
+        print("Email sent")
     except Exception as e:
         print("Error sending email: ", e)
     finally:
