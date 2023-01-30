@@ -4,10 +4,10 @@ from app import flask_app
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# Could be env vars
+# Could be env vars, configured for docker. You may change host to localhost
 db_username = 'postgres'
 db_password = 'email_app'
-db_host = 'localhost'
+db_host = 'email_app_db'
 db_name = 'email_app'
 db_port = '5432'
 

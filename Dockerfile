@@ -2,18 +2,15 @@
 
 FROM python:3.9-slim-bullseye
 
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-RUN sudo apt-get install libpq-dev
+RUN apt-get update && apt-get install -y libpq-dev
 
 # Install dependencies:
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
+COPY . /app/
+WORKDIR /app
+RUN pip3 install -r requirements.txt
 EXPOSE 4000
 
 # Run the application:
 COPY . .
-CMD ["python", "app.py"]
+CMD ["nohup", "python3", "main.py"]
+CMD ["celery", "-A", "app", "worker", "--loglevel=info", "--beat"]

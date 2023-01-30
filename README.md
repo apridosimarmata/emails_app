@@ -12,23 +12,29 @@ There are three instance in this system:
 
 
 ```docker pull postgres```
+
 ```docker pull redis```
+
 ## Creating a network
 
 ```docker network create email_app```
 
 ## Starting the containers
+
 ```docker run --name email_app_db -e POSTGRES_PASSWORD=email_app POSTGRES_USER=postgres -d -p 5432:5432 --network email_app postgres``` starting db
+
 ```docker run --name email_app_redis -d -p 6379:6379 --network email_app redis``` starting redis
-```docker run --name email_app -d -p 4000:4000 --network email_app jublia``` starting app
+
 
 ## Setting up database
 ```docker exec -it email_app_db bash```
+
 ```psql -U postgres``
 
 ```CREATE DATABASE email_app;```
 
 ```\c email_app;```
+
 ```
 CREATE TABLE emails (
   id SERIAL PRIMARY KEY,
@@ -72,12 +78,12 @@ INSERT INTO event_registration (people_id, event_id) VALUES (3, 1);
 
 
 ## Setting up app
+```docker build --tag jublia .``` build image
 
-```python3 app.py```
+```docker run --name email_app -d -p 4000:4000 --network email_app jublia``` starting app
 
-```celery -A app worker --loglevel=info --beat```
 
 
 
 ## Send an email data
-```curl -H "Content-Type: application/json" -X POST -d '{ "event_id": 1, "email_subject": "Payday Sale!", "email_content": "PayDay sale! Checkout now at this link", "timestamp": “30 Jan 2023 23:12" }' http://localhost:4001/api/emails/save_emails```
+```curl -H "Content-Type: application/json" -X POST -d '{ "event_id": 1, "email_subject": "Payday Sale!", "email_content": "PayDay sale! Checkout now at this link", "timestamp": "30 Jan 2023 16:11" }' http://localhost:4001/api/emails/save_emails```

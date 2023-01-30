@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_script import Manager
 
 
 ''' SETTING UP FLASK APP '''
@@ -11,9 +10,11 @@ flask_app = Flask(__name__)
 from celery import Celery
 from datetime import timedelta
 
+# Could be env vars, configured for docker. You may change host to localhost
+
 flask_app.config.update(CELERY_CONFIG={
-    'broker_url': 'redis://localhost:6379',
-    'result_backend': 'redis://localhost:6379',
+    'broker_url': 'redis://email_app_redis:6379',
+    'result_backend': 'redis://email_app_redis:6379',
 
 })
 
