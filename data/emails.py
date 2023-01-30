@@ -24,32 +24,33 @@ class EventRegistration(Base):
     event_id = db.Column(db.String)
 
 '''
-CREATE TABLE orang (
+CREATE TABLE people (
     id serial PRIMARY KEY,
-    nama VARCHAR(255),
-    alamat_email VARCHAR(255)
+    name VARCHAR(255),
+    email_address VARCHAR(255)
 );
 
-CREATE TABLE acara (
+CREATE TABLE event (
     id serial PRIMARY KEY,
-    nama VARCHAR(255)
+    name VARCHAR(255)
 );
 
-CREATE TABLE pendaftaran_acara (
-    id_orang INTEGER PRIMARY KEY,
-    id_acara INTEGER,
-    FOREIGN KEY (id_orang) REFERENCES orang (id),
-    FOREIGN KEY (id_acara) REFERENCES acara (id)
+CREATE TABLE event_registration (
+    people_id INTEGER PRIMARY KEY,
+    event_id INTEGER,
+    FOREIGN KEY (people_id) REFERENCES people (id),
+    FOREIGN KEY (event_id) REFERENCES event (id)
 );
-INSERT INTO orang (nama, alamat_email) VALUES ('Rudi', 'rudi@example.com');
-INSERT INTO orang (nama, alamat_email) VALUES ('Andi', 'andi@example.com');
-INSERT INTO orang (nama, alamat_email) VALUES ('Siti', 'siti@example.com');
 
-INSERT INTO acara (nama) VALUES ('Seminar Web Development');
-INSERT INTO acara (nama) VALUES ('Workshop Mobile Development');
+INSERT INTO people (name, email_address) VALUES ('Rudi', 'rudi@example.com');
+INSERT INTO people (name, email_address) VALUES ('Andi', 'andi@example.com');
+INSERT INTO people (name, email_address) VALUES ('Siti', 'siti@example.com');
 
-INSERT INTO pendaftaran_acara (id_orang, id_acara) VALUES (1, 1);
-INSERT INTO pendaftaran_acara (id_orang, id_acara) VALUES (2, 2);
-INSERT INTO pendaftaran_acara (id_orang, id_acara) VALUES (3, 1);
+INSERT INTO event (name) VALUES ('Seminar Web Development');
+INSERT INTO event (name) VALUES ('Workshop Mobile Development');
+
+INSERT INTO event_registration (people_id, event_id) VALUES (1, 1);
+INSERT INTO event_registration (people_id, event_id) VALUES (2, 2);
+INSERT INTO event_registration (people_id, event_id) VALUES (3, 1);
 
 '''

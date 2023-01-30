@@ -15,5 +15,3 @@ def send_email(to, subject, message):
         print("Error sending email: ", e)
     finally:
         server.quit()
-
-send_email("recipient_email@example.com", "Email Subject", "Email message body")
