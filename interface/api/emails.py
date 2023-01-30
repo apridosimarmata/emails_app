@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from controller.emails import *
+
 emails_api_prefix = 'api/emails'
 
 emails_api = Blueprint(emails_api_prefix, __name__)

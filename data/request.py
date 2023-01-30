@@ -1,12 +1,13 @@
-from dataclasses import dataclass
+from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
-@dataclass
-class SaveEmailRequest:
-    event_id: int
-    email_subject: str
-    email_content: str
-    timestamp: str
+Base = declarative_base()
 
-    def __post_init__(self):
-        # Validate data here
-        return
+class Emails(Base):
+    __tablename__ = 'emails'
+    
+    id = Column(Integer, primary_key=True)
+    event_id = Column(Integer)
+    email_subject = Column(String(255))
+    email_content = Column(Text)
+    timestamp = Column(DateTime)
